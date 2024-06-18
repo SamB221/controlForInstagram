@@ -1,0 +1,16 @@
+.shreddit-feed {
+    display: none;
+}
+
+main#main-content {
+    display: none;
+}
+
+div#right-sidebar-container {
+    flex-grow: 1 !important;
+    width: auto !important;
+}
+
+div.px-md.text-neutral-content-weak {
+    display: none !important;
+}

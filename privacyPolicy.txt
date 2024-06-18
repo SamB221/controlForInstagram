@@ -1,0 +1,10 @@
+Permissions: storage
+This extension stores data locally in order to remember
+preferences across sessions. Data is not viewable or 
+stored by the extension creator.
+
+Host Permissions: instagram.com/ 
+This extension needs the ability to access the URL of 
+pages on reddit.com and the ability to add stylesheets
+to the site in order to edit the appearance of it. No 
+data is collected anywhere in this regard. 
