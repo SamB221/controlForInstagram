@@ -1,47 +1,47 @@
 {
-    "manifest_version": 3,
-    "name": "Control for Instagram",
-    "version": "1.2.2",
-    "description": "Lets you take control of your time by limiting Instagram features",
-    "permissions": [
-      "storage"
-    ],
-    "host_permissions": ["*://*.instagram.com/*"],
+  "manifest_version": 3,
+  "name": "Control for Instagram",
+  "version": "1.2.2",
+  "description": "Lets you take control of your time by limiting Instagram features",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": ["*://*.instagram.com/*"],
   
-    "icons": {
-      "128": "icons/control_simple.png"
-    },
+  "icons": {
+    "128": "icons/control_simple.png"
+  },
 
-    "browser_specific_settings": {
-      "gecko": {
-        "id": "extension@controlinsta.org"
-      }
-    },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "extension@controlinsta.org"
+    }
+  },
   
-    "options_ui" : {
-      "page": "options.html",
-      "open_in_tab": true
-    },
+  "options_ui" : {
+    "page": "options.html",
+    "open_in_tab": true
+  },
   
-    "action": {
-      "default_popup": "popup.html"
-    },
+  "action": {
+    "default_popup": "popup.html"
+  },
   
-    "content_scripts": [{
-        "matches": ["*://*.instagram.com/*"],
-        "js": ["js/control.js"],
-        "run_at": "document_start"
-    }],
+  "content_scripts": [{
+    "matches": ["*://*.instagram.com/*"],
+    "js": ["js/control.js"],
+    "run_at": "document_start"
+  }],
   
-    "web_accessible_resources": [{ 
-      "resources": [
-        "css/reddit/main_page.css",
-        "css/reddit/subreddits.css",
-        "css/reddit/leftsidebar.css",
-        "css/reddit/notifications.css",
-        "css/reddit/trending.css",
-        "css/reddit/grayscale.css"
-      ],
-      "matches": ["*://*.instagram.com/*"]
-    }]
-  }
+  "web_accessible_resources": [{ 
+    "resources": [
+      "css/reddit/main_page.css",
+      "css/reddit/subreddits.css",
+      "css/reddit/leftsidebar.css",
+      "css/reddit/notifications.css",
+      "css/reddit/trending.css",
+      "css/reddit/grayscale.css"
+    ],
+    "matches": ["*://*.instagram.com/*"]
+  }]
+}

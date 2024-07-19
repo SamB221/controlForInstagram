@@ -19,6 +19,7 @@ function initialize() {
 }
 
 function saveOptions(e) {
+    const turnedOff = checks[e.target.id];
     // toggles check
     checks[e.target.id] = !checks[e.target.id];
     updateImage();
@@ -32,9 +33,17 @@ function saveOptions(e) {
     e.preventDefault();
 
     // reload page if changes are applied
+    let actionType = '';
+    if (turnedOff) {
+        actionType = 'hard';
+    } else {
+        actionType = 'soft';
+    }
+    console.log(actionType);
+
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         chrome.tabs.sendMessage(tabs[0].id, {
-        action: 'reloadCSS',
+        action: actionType + 'reloadCSS',
         });
     });
 }

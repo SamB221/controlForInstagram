@@ -1,8 +1,0 @@
-/*removes notification bell*/
-[data-part="inbox"] {
-    display: none !important;
-  }
-  
-.shreddit-notification-frequency-control {
-    display: none !important;
-}
