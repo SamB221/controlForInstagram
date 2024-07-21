@@ -17,25 +17,24 @@ function initialize() {
                     document.body.style.filter = 'grayscale(0%)';
                 }
             } else if (data[index]) {
-                console.log(elementName);
                 removeElement(elementName);
                 bannedURLS.push(elementName);
             }
         });
-    });
-    
-    for (let i = 0; i < bannedURLS.length; i++) {
-        // clears page if on page that is "banned"
-        if (currentUrl.includes(bannedURLS[i])) {
-            const mainElement = document.querySelector('main');
-            // Check if a <main> element was found
-            if (mainElement) {
-                mainElement.style.visibility = 'hidden';
-                element.style.pointerEvents = 'none';
-                alert("hi");
+
+        for (let i = 0; i < bannedURLS.length; i++) {
+            // clears page if on page that is "banned"
+            if (currentUrl.includes("www.instagram.com/"+bannedURLS[i]+"/") ||
+            currentUrl.endsWith("www.instagram.com/"+bannedURLS[i])) {
+                const mainElement = document.querySelector('main');
+                // Check if a <main> element was found
+                if (mainElement) {
+                    mainElement.style.visibility = 'hidden';
+                    element.style.pointerEvents = 'none';
+                }
             }
         }
-    }
+    });
 }
 
 function removeElement(elementName) {
