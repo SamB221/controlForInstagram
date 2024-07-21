@@ -1,7 +1,7 @@
 // all the possible stylesheets to be turned on
 const settings = ["reels", "explore", "inbox", "notifications", "comments", "grayscale", "inboxOnly"];
 const associatedElement = [];
-const bannedURLS = [];
+const whiteListedUrls = ["instagram.com/direct/", "instagram.com/p/", "instagram.com/accounts/"];
 
 document.addEventListener("DOMContentLoaded", initialize);
 
@@ -18,9 +18,18 @@ function initialize() {
                 }
             } else if (data[index]) {
                 if (elementName === "inboxOnly") {
-                    if (!currentUrl.includes("www.instagram.com/direct/") && !currentUrl.includes("www.instagram.com/p/")) {
+                    let isInbox = false;
+                    for (let i = 0; i < whiteListedUrls.length; i++) {
+                        if (currentUrl.includes(whiteListedUrls[i])) {
+                            isInbox = true;
+                            break;
+                        }
+                    }
+
+                    if (!isInbox) {
                         alert('You have turned on "inbox only" with Control for Instagram');
                         window.location.href = "https://www.instagram.com/direct/";
+                        return;
                     }
                     removeSideBar();
                 } else {
