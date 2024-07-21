@@ -1,5 +1,5 @@
 // all the possible stylesheets to be turned on
-const settings = ["reels", "explore", "inbox", "notifications", "comments", "grayscale"];
+const settings = ["reels", "explore", "inbox", "notifications", "comments", "grayscale", "inboxOnly"];
 const associatedElement = [];
 const bannedURLS = [];
 
@@ -10,18 +10,26 @@ function initialize() {
     // accesses preferences from storage to determine style sheets
     chrome.storage.sync.get(null, function(data) {
         settings.forEach((elementName, index) => {
-            if (elementName==="grayscale") {
+            if (elementName === "grayscale") {
                 if (data[index]) {
                     document.body.style.filter = 'grayscale(100%)';
                 } else {
                     document.body.style.filter = 'grayscale(0%)';
                 }
             } else if (data[index]) {
-                removeElement(elementName);
-                bannedURLS.push(elementName);
+                if (elementName === "inboxOnly") {
+                    if (!currentUrl.includes("www.instagram.com/direct/") && !currentUrl.includes("www.instagram.com/p/")) {
+                        window.location.href = "https://www.instagram.com/direct/";
+                    }
+                    removeSideBar();
+                } else {
+                    removeElement(elementName);
+                    bannedURLS.push(elementName); 
+                }
             }
         });
 
+        // ensures user isn't on certain pages based on preference
         for (let i = 0; i < bannedURLS.length; i++) {
             // clears page if on page that is "banned"
             if (currentUrl.includes("www.instagram.com/"+bannedURLS[i]+"/") ||
@@ -46,10 +54,17 @@ function removeElement(elementName) {
         const href = aTag.getAttribute('href');
         // Check if href attribute contains the desired substring
         if (href && href.includes(elementName)) {
-            console.log(aTag);
             aTag.remove();
         }
     });
+}
+
+function removeSideBar() {
+    for (let i = 0; i < 4; i++) {
+        removeElement(settings[i]);
+    }
+
+    removeElement("#");
 }
 
 // reloads upon message from extension's popup
@@ -58,7 +73,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         document.location.reload(true);
         initialize();
     } else if (message.action === 'softreloadCSS') {
-        initialize();
+        initialize("/direct/t");
     }
 });
 
