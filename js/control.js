@@ -19,29 +19,24 @@ function initialize() {
             } else if (data[index]) {
                 if (elementName === "inboxOnly") {
                     if (!currentUrl.includes("www.instagram.com/direct/") && !currentUrl.includes("www.instagram.com/p/")) {
+                        alert('You have turned on "inbox only" with Control for Instagram');
                         window.location.href = "https://www.instagram.com/direct/";
                     }
                     removeSideBar();
                 } else {
                     removeElement(elementName);
-                    bannedURLS.push(elementName); 
+                    if (currentUrl.includes("www.instagram.com/"+elementName+"/") ||
+                        currentUrl.endsWith("www.instagram.com/"+elementName)) {
+                        const mainElement = document.querySelector('main');
+                        // Check if a <main> element was found
+                        if (mainElement) {
+                            mainElement.style.visibility = 'hidden';
+                            element.style.pointerEvents = 'none';
+                        }
+                    }
                 }
             }
         });
-
-        // ensures user isn't on certain pages based on preference
-        for (let i = 0; i < bannedURLS.length; i++) {
-            // clears page if on page that is "banned"
-            if (currentUrl.includes("www.instagram.com/"+bannedURLS[i]+"/") ||
-            currentUrl.endsWith("www.instagram.com/"+bannedURLS[i])) {
-                const mainElement = document.querySelector('main');
-                // Check if a <main> element was found
-                if (mainElement) {
-                    mainElement.style.visibility = 'hidden';
-                    element.style.pointerEvents = 'none';
-                }
-            }
-        }
     });
 }
 
