@@ -1,14 +1,24 @@
+:root {
+    --grad1: #272727;
+    --grad2: #272727; 
+    --grad3: #272727;
+}
+
 h1 {
     text-align: center;
     font-size: 50px;
     margin-bottom: 40px;
+    background: linear-gradient(to right, var(--grad1), var(--grad2), var(--grad3)); 
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+    background-clip: text;
 }
 
 .container {
     margin: auto;
     margin-top: 10%;
-    width: 450px;
-    height: 450px;
+    width: 550px;
+    height: 550px;
 
     border-style: solid;
     border-width: 20px;
@@ -16,6 +26,7 @@ h1 {
 
     background-color: white;
     background-image: url("../icons/control_grey.svg");
+    background-size: 500px;
     background-repeat: no-repeat;
     background-position: center; 
 }
@@ -37,7 +48,7 @@ h1 {
 
 body {
     font-family: Verdana, sans-serif;
-    background-image: linear-gradient(to right, #1D4350 , #A43931);
+    background-image: linear-gradient(to right, #f9ce34ff , #6228d7ff);
 }
 
 .switch {
@@ -81,11 +92,11 @@ body {
 }
   
 input:checked + .slider {
-    background-color: #f9ce34ff;
+    background-color: #fcb045ff;
 }
   
 input:focus + .slider {
-    box-shadow: 0 0 1px #f9ce34ff;
+    box-shadow: 0 0 1px #fcb045ff;
 }
   
 input:checked + .slider:before {
