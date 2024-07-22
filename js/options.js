@@ -19,18 +19,23 @@ function initialize() {
 }
 
 function saveOptions(e) {
-    const turnedOff = checks[e.target.id];
+    let turnedOff = checks[e.target.id];
     // toggles check
     checks[e.target.id] = !checks[e.target.id];
+
     // ensures last checked box unchecks all other boxes
     if (e.target.id == numOfOptions-1 && !turnedOff) {
         for (let i = 0; i < numOfOptions-2; i++) {
-            checks[i] = false;
-            document.getElementById(i+"").checked = false;
+            if (checks[i]) {
+                turnedOff = true;
+                checks[i] = false;
+                document.getElementById(i+"").checked = false;
+            }
         }
     } else if (e.target.id < numOfOptions-2 && checks[numOfOptions-1]) {
         checks[numOfOptions-1] = false;
         document.getElementById(numOfOptions-1+"").checked = false;
+        turnedOff = true;
     }
     updateImage();
 
@@ -44,7 +49,7 @@ function saveOptions(e) {
 
     // reload page if changes are applied
     let actionType = '';
-    if (turnedOff || e.target.id == numOfOptions-1) {
+    if (turnedOff && e.target.id != numOfOptions-2) {
         actionType = 'hard';
     } else {
         actionType = 'soft';
