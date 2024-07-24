@@ -1,7 +1,7 @@
 // all the possible stylesheets to be turned on
-const settings = ["reels", "explore", "inbox", "notifications", "comments", "grayscale", "inboxOnly"];
+const settings = ["reels", "explore", "direct", "#", "comments", "grayscale", "inboxOnly"];
 const associatedElement = [];
-const whiteListedUrls = ["instagram.com/direct/", "instagram.com/p/", "instagram.com/accounts/"];
+const whiteListedUrls = ["instagram.com/direct/", "instagram.com/p/", "instagram.com/accounts/", "instagram.com/challenge/"];
 
 document.addEventListener("DOMContentLoaded", initialize);
 
@@ -16,8 +16,8 @@ function initialize() {
                 } else {
                     document.body.style.filter = 'grayscale(0%)';
                 }
-            } else if (data[index]) {
-                if (elementName === "inboxOnly") {
+            } else if (elementName === "inboxOnly") {
+                if (data[index]) {
                     let isInbox = false;
                     for (let i = 0; i < whiteListedUrls.length; i++) {
                         if (currentUrl.includes(whiteListedUrls[i])) {
@@ -25,14 +25,16 @@ function initialize() {
                             break;
                         }
                     }
-
+    
                     if (!isInbox) {
                         alert('You have turned on "inbox only" with Control for Instagram');
                         window.location.href = "https://www.instagram.com/direct/";
                         return;
                     }
                     removeSideBar();
-                } else {
+                }
+            } else {
+                if (data[index]) {
                     removeElement(elementName);
                     if (currentUrl.includes("www.instagram.com/"+elementName+"/") ||
                         currentUrl.endsWith("www.instagram.com/"+elementName)) {
@@ -40,7 +42,18 @@ function initialize() {
                         // Check if a <main> element was found
                         if (mainElement) {
                             mainElement.style.visibility = 'hidden';
-                            element.style.pointerEvents = 'none';
+                            mainElement.style.pointerEvents = 'none';
+                        }
+                    }   
+                } else {
+                    addElement(elementName);
+                    if (currentUrl.includes("www.instagram.com/"+elementName+"/") ||
+                        currentUrl.endsWith("www.instagram.com/"+elementName)) {
+                        const mainElement = document.querySelector('main');
+                        // Check if a <main> element was found
+                        if (mainElement) {
+                            mainElement.style.visibility = 'visible';
+                            mainElement.style.pointerEvents = 'auto';
                         }
                     }
                 }
@@ -58,13 +71,30 @@ function removeElement(elementName) {
         const href = aTag.getAttribute('href');
         // Check if href attribute contains the desired substring
         if (href && href.includes(elementName)) {
-            aTag.remove();
+            aTag.style.opacity = '0.3';
+            aTag.style.pointerEvents = 'none';
+        }
+    });
+}
+
+function addElement(elementName) {
+    // Select all <a> tags 
+    const allATags = document.querySelectorAll('a');
+
+    // Iterate through each <a> tag and check its href attribute
+    allATags.forEach(aTag => {
+        const href = aTag.getAttribute('href');
+        // Check if href attribute contains the desired substring
+        if (href && href.includes(elementName)) {
+            aTag.style.opacity = '1';
+            aTag.style.pointerEvents = 'auto';
         }
     });
 }
 
 function removeSideBar() {
     for (let i = 0; i < 4; i++) {
+        if (i == 2) continue;
         removeElement(settings[i]);
     }
 
@@ -84,9 +114,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // reinitializing when navigating within website
 let lastUrl = location.href; 
 new MutationObserver(() => {
-  const url = location.href;
-  if (url !== lastUrl) {
-    lastUrl = url;
-    initialize();
-  }
+    const url = location.href;
+    if (url !== lastUrl) {
+        lastUrl = url;
+        initialize();
+    }
 }).observe(document, {subtree: true, childList: true});

@@ -50,7 +50,7 @@ function saveOptions(e) {
     // reload page if changes are applied
     let actionType = '';
     if (turnedOff && e.target.id != numOfOptions-2) {
-        actionType = 'hard';
+        actionType = 'soft';
     } else {
         actionType = 'soft';
     }
