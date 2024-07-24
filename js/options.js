@@ -27,7 +27,6 @@ function saveOptions(e) {
     if (e.target.id == numOfOptions-1 && !turnedOff) {
         for (let i = 0; i < numOfOptions-2; i++) {
             if (checks[i]) {
-                turnedOff = true;
                 checks[i] = false;
                 document.getElementById(i+"").checked = false;
             }
@@ -35,7 +34,6 @@ function saveOptions(e) {
     } else if (e.target.id < numOfOptions-2 && checks[numOfOptions-1]) {
         checks[numOfOptions-1] = false;
         document.getElementById(numOfOptions-1+"").checked = false;
-        turnedOff = true;
     }
     updateImage();
 
@@ -47,17 +45,9 @@ function saveOptions(e) {
     chrome.storage.sync.set(data);
     e.preventDefault();
 
-    // reload page if changes are applied
-    let actionType = '';
-    if (turnedOff && e.target.id != numOfOptions-2) {
-        actionType = 'soft';
-    } else {
-        actionType = 'soft';
-    }
-
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         chrome.tabs.sendMessage(tabs[0].id, {
-        action: actionType + 'reloadCSS',
+        action: 'reloadCSS',
         });
     });
 }

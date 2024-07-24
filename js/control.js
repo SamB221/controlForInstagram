@@ -103,12 +103,7 @@ function removeSideBar() {
 
 // reloads upon message from extension's popup
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === 'hardreloadCSS') {
-        document.location.reload(true);
-        initialize();
-    } else if (message.action === 'softreloadCSS') {
-        initialize("/direct/t");
-    }
+    initialize();
 });
 
 // reinitializing when navigating within website
