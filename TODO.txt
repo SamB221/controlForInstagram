@@ -1,4 +1,2 @@
-Test if alert causes problems
-Good idea to have remove inbox/only inbox?
-
-Remove home button when deleting side bar (maybe pass in empty string?)
+Remove comment sections
+Remove suggested posts

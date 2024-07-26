@@ -32,6 +32,8 @@ function initialize() {
                         return;
                     }
                     removeSideBar();
+                } else {
+                    addSideBar();
                 }
             } else if (elementName === "suggestedPosts") {
                 if (data[index]) {
@@ -101,10 +103,45 @@ function addElement(elementName) {
 
 function removeSideBar() {
     for (let i = 0; i < 4; i++) {
+        if (i==2) continue;
         removeElement(settings[i]);
     }
 
-    removeElement("#");
+    removeElementByLabel("Home");
+    removeElementByLabel("Instagram");
+    removeElementByLabel("Search");
+    removeElementByLabel("Notifications");
+}
+
+function addSideBar() {
+    addElementByLabel("Home");
+    addElementByLabel("Instagram");
+    addElementByLabel("Search");
+    addElementByLabel("Notifications");
+}
+
+function removeElementByLabel(elementName) {
+    const elements = document.querySelectorAll('svg');
+
+    elements.forEach(element => {
+        // Check if the text content matches the provided label
+        if (element.textContent.trim() === elementName) {
+            element.style.opacity = '0.3';
+            element.style.pointerEvents = 'none';
+        }
+    });
+}
+
+function addElementByLabel(elementName) {
+    const elements = document.querySelectorAll('svg');
+
+    elements.forEach(element => {
+        // Check if the text content matches the provided label
+        if (element.textContent.trim() === elementName) {
+            element.style.opacity = '1';
+            element.style.pointerEvents = 'auto';
+        }
+    });
 }
 
 // reloads upon message from extension's popup
