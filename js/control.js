@@ -1,5 +1,5 @@
 // all the possible stylesheets to be turned on
-const settings = ["reels", "explore", "direct", "#", "comments", "grayscale", "inboxOnly"];
+const settings = ["reels", "explore", "direct", "grayscale", "inboxOnly"];
 const associatedElement = [];
 const whiteListedUrls = ["instagram.com/direct/", "instagram.com/p/", "instagram.com/accounts/", "instagram.com/challenge/"];
 
@@ -32,6 +32,13 @@ function initialize() {
                         return;
                     }
                     removeSideBar();
+                }
+            } else if (elementName === "suggestedPosts") {
+                if (data[index]) {
+                    removeSuggested();
+                }
+                else {
+                    addSuggested();
                 }
             } else {
                 if (data[index]) {
@@ -94,7 +101,6 @@ function addElement(elementName) {
 
 function removeSideBar() {
     for (let i = 0; i < 4; i++) {
-        if (i == 2) continue;
         removeElement(settings[i]);
     }
 

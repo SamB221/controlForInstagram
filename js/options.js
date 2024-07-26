@@ -1,4 +1,4 @@
-const numOfOptions = 7;
+const numOfOptions = 5;
 const checks = new Array(numOfOptions).fill(false);
 
 document.addEventListener("DOMContentLoaded", initialize);

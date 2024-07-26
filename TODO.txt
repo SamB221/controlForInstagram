@@ -1,6 +1,4 @@
 Test if alert causes problems
-Fix hanging comments
-Fix notification implementation
 Good idea to have remove inbox/only inbox?
 
 Remove home button when deleting side bar (maybe pass in empty string?)
