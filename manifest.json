@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Control for Instagram",
-  "version": "1.2.2",
+  "version": "1.0",
   "description": "Lets you take control of your time by limiting Instagram features",
   "permissions": [
     "storage"
@@ -12,12 +12,6 @@
     "128": "icons/control_simple.png"
   },
 
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "extension@controlinsta.org"
-    }
-  },
-  
   "options_ui" : {
     "page": "options.html",
     "open_in_tab": true

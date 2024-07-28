@@ -1,4 +1,5 @@
-The Chrome version of Control
+Control for Instagram
 
-Allows you to turn off Instagram features, such as the main feed, 
-subreddit feeds, notifications, and the trending page. 
+Allows you to turn off Instagram features, such as reels, the 
+explore page, inboxes, and also to limit Instagram to the 
+inbox itself. 

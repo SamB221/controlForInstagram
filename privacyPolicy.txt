@@ -5,6 +5,6 @@ stored by the extension creator.
 
 Host Permissions: instagram.com/ 
 This extension needs the ability to access the URL of 
-pages on reddit.com and the ability to add stylesheets
-to the site in order to edit the appearance of it. No 
+pages on instagram.com in order to redirect the user 
+across the website based on user preferences. No 
 data is collected anywhere in this regard. 
