@@ -27,7 +27,6 @@ function initialize() {
                     }
     
                     if (!isInbox) {
-                        alert('You have turned on "inbox only" with Control for Instagram');
                         window.location.href = 'https://www.instagram.com/direct/';
                         return;
                     }
