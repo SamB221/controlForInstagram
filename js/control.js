@@ -12,9 +12,9 @@ function initialize() {
         settings.forEach((elementName, index) => {
             if (elementName === 'grayscale') {
                 if (data[index]) {
-                    document.body.style.filter = 'grayscale(100%)';
+                    document.documentElement.style.filter = 'grayscale(100%)';
                 } else {
-                    document.body.style.filter = 'grayscale(0%)';
+                    document.documentElement.style.filter = 'grayscale(0%)';
                 }
             } else if (elementName === 'inboxOnly') {
                 if (data[index]) {
