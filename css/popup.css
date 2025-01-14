@@ -4,7 +4,6 @@
     --grad3: #272727;
 }
 
-
 h1 {
     text-align: center;
     font-size: 33px;
@@ -98,4 +97,18 @@ input:checked + .slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
+}
+
+@media only screen and (max-device-width: 768px) {
+    .container {
+        width: 100%;
+        max-width: none;  /* Remove the max-width constraint */
+        padding-left: 50px;  /* Optional: Add padding if you want some space on the left */
+        padding-right: 50px;  /* Optional: Add padding if you want some space on the right */
+        overflow: visible;  /* Allow content to spill out */
+    }
+
+    .formContainer {
+        font-size: 21px;
+    }
 }
