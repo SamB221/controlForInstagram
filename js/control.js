@@ -7,77 +7,15 @@ document.addEventListener('DOMContentLoaded', initialize);
 
 function initialize() {
     var currentUrl = window.location.href;
-    // accesses preferences from storage to determine style sheets
+
     chrome.storage.sync.get(null, function(data) {
         settings.forEach((elementName, index) => {
             if (elementName === 'grayscale') {
-                if (data[index]) {
-                    document.documentElement.style.filter = 'grayscale(100%)';
-                } else {
-                    document.documentElement.style.filter = 'grayscale(0%)';
-                }
+                handleGrayscale(data[index]);
             } else if (elementName === 'inboxOnly') {
-                if (data[index]) {
-                    let isInbox = false;
-                    for (let i = 0; i < whiteListedUrls.length; i++) {
-                        if (currentUrl.includes(whiteListedUrls[i])) {
-                            isInbox = true;
-                            break;
-                        }
-                    }
-    
-                    if (!isInbox) {
-                        window.location.href = 'https://www.instagram.com/direct/';
-                        return;
-                    }
-                    removeSideBar();
-                } else {
-                    addSideBar();
-                }
+                handleInbox(data[index], currentUrl);
             } else {
-                if (data[index]) {
-                    removeElement(elementName);
-                    if (currentUrl.includes('www.instagram.com/'+elementName+'/') ||
-                        currentUrl.endsWith('www.instagram.com/'+elementName)) {
-                        const mainElement = document.querySelector('main');
-                        // Check if a <main> element was found
-                        if (mainElement) {
-                            mainElement.style.visibility = 'hidden';
-                            mainElement.style.pointerEvents = 'none';
-
-                            const mediaElements = mainElement.querySelectorAll('audio, video');
-
-                            // Pause or stop all media elements
-                            mediaElements.forEach(element => {
-                                if (!element.paused) {
-                                    element.dataset.wasPaused = true;
-                                    element.pause();
-                                }
-                            });
-                        }
-                    }   
-                } else {
-                    addElement(elementName);
-                    if (currentUrl.includes('www.instagram.com/'+elementName+'/') ||
-                        currentUrl.endsWith('www.instagram.com/'+elementName)) {
-                        const mainElement = document.querySelector('main');
-                        // Check if a <main> element was found
-                        if (mainElement) {
-                            mainElement.style.visibility = 'visible';
-                            mainElement.style.pointerEvents = 'auto';
-
-                            const mediaElements = mainElement.querySelectorAll('audio, video');
-
-                            // Pause or stop all media elements
-                            mediaElements.forEach(element => {
-                                if (element.dataset.wasPaused === 'true') {
-                                    element.play();
-                                    element.dataset.wasPaused === 'false'
-                                }
-                            });
-                        }
-                    }
-                }
+                handleDefault(data[index], currentUrl, elementName);
             }
         });
     });
@@ -113,25 +51,6 @@ function addElement(elementName) {
     });
 }
 
-function removeSideBar() {
-    for (let i = 0; i < 4; i++) {
-        if (i==2) continue;
-        removeElement(settings[i]);
-    }
-
-    removeElementByLabel('Home');
-    removeElementByLabel('Instagram');
-    removeElementByLabel('Search');
-    removeElementByLabel('Notifications');
-}
-
-function addSideBar() {
-    addElementByLabel('Home');
-    addElementByLabel('Instagram');
-    addElementByLabel('Search');
-    addElementByLabel('Notifications');
-}
-
 function removeElementByLabel(elementName) {
     const elements = document.querySelectorAll('svg');
 
@@ -154,6 +73,99 @@ function addElementByLabel(elementName) {
             element.style.pointerEvents = 'auto';
         }
     });
+}
+
+function handleGrayscale(grayscale) {
+    if (grayscale) {
+        document.documentElement.style.filter = 'grayscale(100%)';
+    } else {
+        document.documentElement.style.filter = 'grayscale(0%)';
+    }
+}
+
+function handleInbox(removeInbox, currentUrl) {
+    if (removeInbox) {
+        let isInbox = false;
+        for (let i = 0; i < whiteListedUrls.length; i++) {
+            if (currentUrl.includes(whiteListedUrls[i])) {
+                isInbox = true;
+                break;
+            }
+        }
+
+        if (!isInbox) {
+            window.location.href = 'https://www.instagram.com/direct/';
+            return;
+        }
+        removeSideBar();
+    } else {
+        addSideBar();
+    }
+}
+
+function handleDefault(remove, currentUrl, elementName) {
+    if (remove) {
+        removeElement(elementName);
+        if (currentUrl.includes('www.instagram.com/'+elementName+'/') ||
+            currentUrl.endsWith('www.instagram.com/'+elementName)) {
+            const mainElement = document.querySelector('main');
+            // Check if a <main> element was found
+            if (mainElement) {
+                mainElement.style.visibility = 'hidden';
+                mainElement.style.pointerEvents = 'none';
+
+                const mediaElements = mainElement.querySelectorAll('audio, video');
+
+                // Pause or stop all media elements
+                mediaElements.forEach(element => {
+                    if (!element.paused) {
+                        element.dataset.wasPaused = true;
+                        element.pause();
+                    }
+                });
+            }
+        }   
+    } else {
+        addElement(elementName);
+        if (currentUrl.includes('www.instagram.com/'+elementName+'/') ||
+            currentUrl.endsWith('www.instagram.com/'+elementName)) {
+            const mainElement = document.querySelector('main');
+            // Check if a <main> element was found
+            if (mainElement) {
+                mainElement.style.visibility = 'visible';
+                mainElement.style.pointerEvents = 'auto';
+
+                const mediaElements = mainElement.querySelectorAll('audio, video');
+
+                // Pause or stop all media elements
+                mediaElements.forEach(element => {
+                    if (element.dataset.wasPaused === 'true') {
+                        element.play();
+                        element.dataset.wasPaused === 'false'
+                    }
+                });
+            }
+        }
+    }
+}
+
+function removeSideBar() {
+    for (let i = 0; i < 4; i++) {
+        if (i==2) continue;
+        removeElement(settings[i]);
+    }
+
+    removeElementByLabel('Home');
+    removeElementByLabel('Instagram');
+    removeElementByLabel('Search');
+    removeElementByLabel('Notifications');
+}
+
+function addSideBar() {
+    addElementByLabel('Home');
+    addElementByLabel('Instagram');
+    addElementByLabel('Search');
+    addElementByLabel('Notifications');
 }
 
 // reloads upon message from extension's popup

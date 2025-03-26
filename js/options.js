@@ -10,9 +10,7 @@ function initialize() {
         for (let i = 0; i < numOfOptions; i++) {
             if (data[i+''] !== undefined) {
                 checks[i] = data[i+''];
-                /*document.getElementsByClassName(".slider").style.transition = "0s";*/
                 document.getElementById(i+'').checked = checks[i];
-                /*document.getElementsByClassName(".slider").style.transition = ".3s";*/
             }
         }
         updateImage();
@@ -22,7 +20,6 @@ function initialize() {
 // saves options and performs necessary functions when changes are made
 function saveOptions(e) {
     let turnedOff = checks[e.target.id];
-    // toggles check
     checks[e.target.id] = !checks[e.target.id];
 
     // ensures last checked box unchecks all other boxes
